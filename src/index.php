@@ -39,7 +39,7 @@ $container->set(
 $app = new Micro($container);
 
 $app->get(
-    '/api/movie',
+    '/api/product',
     function () {
         $movies = $this->mongo->data->find();
 
@@ -59,7 +59,7 @@ $app->get(
 );
 
 $app->get(
-    '/api/movie/search/{name}',
+    '/api/product/search/{name}',
     function ($name) {
         $movies = $this->mongo->data->find(array('name' => $name));
         $data = [];
@@ -77,7 +77,7 @@ $app->get(
 );
 
 $app->get(
-    '/api/movie/{id}',
+    '/api/product/{id}',
     function ($id) {
         $movies = $this->mongo->data->findOne(array('_id' => new MongoDB\BSON\ObjectId($id)));
         print_r(json_encode($movies));
@@ -85,7 +85,7 @@ $app->get(
 );
 
 $app->post(
-    '/api/movie',
+    '/api/product',
     function () use ($app) {
         $robot = $app->request->getJsonRawBody();
         $this->mongo->data->insertOne($robot);
@@ -95,7 +95,7 @@ $app->post(
 
 
 $app->put(
-    '/api/movie/{id}',
+    '/api/product/{id}',
     function ($id) use ($app) {
         $robot = $app->request->getJsonRawBody();
         $this->mongo->data->updateOne(array("_id" => new MongoDB\BSON\ObjectId($id)), array('$set' => $robot));
@@ -104,7 +104,7 @@ $app->put(
 );
 
 $app->delete(
-    '/api/movie/{id}',
+    '/api/product/{id}',
     function ($id) {
         $this->mongo->data->deleteOne(array('_id' => new MongoDB\BSON\ObjectId($id)));
         echo "Deletion Successful";
